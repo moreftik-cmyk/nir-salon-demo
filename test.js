@@ -10,5 +10,7 @@ form.querySelector('[name=name]').value='בדיקת מערכת'; form.querySelec
 if(!w.state.leads.some(l=>l.name==='בדיקת מערכת')) throw new Error('lead not created');
 w.setTab('leads'); const first=w.state.leads[0]; w.selectLead(first.id); w.updateStatus(first.id,'booked');
 if(!w.state.bookings.some(b=>b.name===first.name)) throw new Error('booking not created');
+w.setTab('calendar'); w.dragLead('L-1048'); w.dropOnCalendar('wed','15:00'); const planned=w.state.bookings.find(b=>b.leadId==='L-1048'); if(!planned||planned.status!=='planned') throw new Error('drag scheduling failed');
+w.approveBooking(planned.id); if(w.state.leads.find(l=>l.id==='L-1048').status!=='booked'||planned.status!=='confirmed') throw new Error('booking approval failed');
 if(errors.length) throw new Error(`browser errors: ${errors.map(String).join('; ')}`);
 console.log(`smoke ok: ${w.state.leads.length} leads, ${w.state.bookings.length} bookings, 0 errors`);
