@@ -14,5 +14,32 @@
 @media(max-width:1100px){.priority-list{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:850px){.week-board{min-width:760px}.week-row{grid-template-columns:50px repeat(3,minmax(235px,1fr))}.intake-actions{display:grid;grid-template-columns:1fr}.priority-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.priority-list{grid-template-columns:1fr}}
+/* Final readable workspace layout: priority list beside a wide calendar. */
+.dispatch-layout{display:grid;grid-template-columns:minmax(300px,34%) minmax(0,1fr);gap:18px;direction:rtl;align-items:start}
+.dispatch-pool{width:100%;padding:18px;border-radius:18px}
+.pool-head h2{font-size:22px}
+.pool-hint{margin:10px 0 16px;font-size:11px}
+.priority-list{display:grid;grid-template-columns:1fr;gap:8px}
+.priority-card{min-height:72px;padding:10px 11px;font-size:11px;border-radius:11px}
+.priority-card-name{font-size:14px;margin-bottom:5px}
+.priority-card>div:not(.priority-card-name):not(.priority-stars){font-size:11px}
+.priority-card small{font-size:11px;margin-top:5px}
+.priority-stars{font-size:12px;margin-top:5px}
+.slot-options{gap:5px;margin-top:7px}
+.slot-option{padding:5px 7px;font-size:9px}
+.week-scroll{width:100%;overflow:hidden}
+.week-board{min-width:0}
+.week-row{grid-template-columns:62px repeat(3,minmax(0,1fr))}
+.day-head{min-height:54px;padding:10px}
+.day-cell{min-height:70px;padding:5px;gap:4px}
+.schedule-card{min-height:84px;padding:8px 9px;border-radius:9px}
+.schedule-name{font-size:11px}
+.schedule-service{font-size:9px;margin-top:4px}
+.schedule-stars{font-size:10px;margin-top:4px}
+.schedule-status{font-size:9px}
+.schedule-confirm{padding:5px 6px;font-size:9px;margin-top:6px}
+.conflict-note{font-size:9px;padding:3px 4px}
+@media(max-width:1000px){.dispatch-layout{grid-template-columns:1fr}.dispatch-pool{order:2}.dispatch-layout>.calendar-card{order:1}.week-scroll{overflow-x:auto}.week-board{min-width:760px}}
+@media(max-width:560px){.priority-list{grid-template-columns:1fr}}
 </style>
 </head><body><div id="app"></div><script>/*CORE*/</script><script>render();</script></body></html>
