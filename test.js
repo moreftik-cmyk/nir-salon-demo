@@ -4,6 +4,7 @@ const dom=new JSDOM(html,{runScripts:'dangerously',url:'https://example.test/',b
 dom.window.addEventListener('error',e=>errors.push(e.error||e.message));
 const w=dom.window;
 for(const tab of ['dashboard','leads','new','customers','calendar']){w.setTab(tab); if(!w.document.querySelector('#app').textContent.trim()) throw new Error(`empty tab ${tab}`);}
+w.setTab('calendar'); if(!w.document.querySelector('.week-board')) throw new Error('weekly calendar missing'); if(w.document.querySelectorAll('.day-head').length!==7) throw new Error('weekly day columns missing');
 w.setTab('new'); const form=w.document.querySelector('.lead-form'); if(!form) throw new Error('form missing');
 form.querySelector('[name=name]').value='בדיקת מערכת'; form.querySelector('[name=phone]').value='050-1111111'; form.querySelector('[name=service]').value='החלקה'; form.querySelector('[name=slots]').value='מחר אחרי 16:00'; form.dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));
 if(!w.state.leads.some(l=>l.name==='בדיקת מערכת')) throw new Error('lead not created');
