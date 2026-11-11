@@ -14,6 +14,47 @@
 @media(max-width:1100px){.priority-list{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:850px){.week-board{min-width:760px}.week-row{grid-template-columns:50px repeat(3,minmax(235px,1fr))}.intake-actions{display:grid;grid-template-columns:1fr}.priority-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.priority-list{grid-template-columns:1fr}}
+/* Accessible calendar workspace: calendar first, readable request rail second. */
+.calendar-page-head{align-items:flex-start;gap:24px;margin-bottom:18px}
+.calendar-title{min-width:0}
+.calendar-title h1{margin-bottom:8px}
+.calendar-title p{font-size:14px;max-width:700px;line-height:1.55}
+.calendar-hint{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:12px;color:#718096;font-size:12px;line-height:1.4}
+.calendar-hint b{color:var(--teal)}
+.calendar-actions{flex:0 0 auto;padding-top:18px}
+.calendar-legend{gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.calendar-legend .btn{font-size:13px;padding:10px 12px;white-space:nowrap}
+.dispatch-layout{grid-template-columns:minmax(285px,300px) minmax(0,1fr);gap:20px;align-items:start}
+.dispatch-pool{position:sticky;top:18px;max-height:calc(100vh - 170px);overflow:auto;padding:18px 16px}
+.pool-head h2{font-size:21px}
+.pool-hint{font-size:12px;line-height:1.5}
+.priority-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin:12px 0 14px}
+.priority-summary span{border-radius:8px;padding:7px 4px;text-align:center;font-size:10px;color:#718096;background:#f5f7fa}
+.priority-summary b{display:block;font-size:15px;color:var(--navy);margin-top:2px}
+.priority-summary .high{background:#fff0df;color:#b86d2d}.priority-summary .mid{background:#f1edff;color:#735bc4}.priority-summary .low{background:#eaf7f6;color:#158e85}
+.priority-card{min-height:0;padding:13px 12px;border-right-width:5px;background:#fff}
+.priority-card-top{display:flex;align-items:center;justify-content:space-between;gap:7px}
+.priority-card-name{font-size:15px;margin:0}
+.priority-pill{font-size:10px;color:#735bc4;background:#f1edff;border-radius:6px;padding:4px 5px;white-space:nowrap}
+.priority-service{font-size:12px;color:#52647c;margin-top:6px}
+.priority-card small{font-size:12px;line-height:1.4}
+.slot-option{font-size:11px;padding:6px 8px;min-height:30px}
+.week-scroll{overflow:hidden}
+.week-row{grid-template-columns:58px repeat(3,minmax(0,1fr))}
+.day-head{min-height:54px;font-size:14px}
+.day-head span{font-size:11px}
+.time-col{min-height:60px;font-size:12px}
+.day-cell{min-height:60px;padding:5px}
+.schedule-card{min-height:76px;padding:8px 9px}
+.schedule-name{font-size:12px}
+.schedule-service{font-size:10px}
+.schedule-stars{font-size:11px}
+.schedule-status{font-size:10px}
+.schedule-confirm{font-size:10px;min-height:28px}
+.conflict-note{font-size:10px;padding:4px 5px}
+.calendar-foot-note{font-size:12px;padding:12px 16px}
+@media(max-width:1050px){.dispatch-layout{grid-template-columns:minmax(260px,29%) minmax(0,1fr)}.calendar-title p{font-size:13px}}
+@media(max-width:850px){.calendar-page-head{gap:8px}.calendar-actions{padding-top:0}.calendar-legend{justify-content:flex-start}.dispatch-layout{grid-template-columns:1fr}.dispatch-pool{position:static;order:2;max-height:380px}.dispatch-layout>.calendar-card{order:1}.week-scroll{overflow-x:auto}.week-board{min-width:760px}}
 /* Final readable workspace layout: priority list beside a wide calendar. */
 .dispatch-layout{display:grid;grid-template-columns:minmax(300px,34%) minmax(0,1fr);gap:18px;direction:rtl;align-items:start}
 .dispatch-pool{width:100%;padding:18px;border-radius:18px}
@@ -140,7 +181,7 @@ function calendarView(){
   const slots=["09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00"];
   const pending=state.leads.filter(l=>l.status!=="booked"&&!plannedFor(l.id)).sort((a,b)=>priority(b)-priority(a));
   const event=(day,time)=>{ const items=state.bookings.filter(e=>e.day===day.key&&e.slot===time); return `${items.length>1?`<div class="conflict-note">${items.length} בועות באותה שעה</div>`:""}${items.map(scheduleCard).join("")}`; };
-  return `<div class="page-head"><div><div class="eyebrow">מרכז השיבוץ של ניר</div><h1>יומן עבודה שבועי</h1><p>ניר עובד רק בשלישי–חמישי. שאר הימים סגורים. פנייה עם כמה אפשרויות נשארת כבועה אחת; ניר בוחר אפשרות אחת ומשבץ אותה.</p></div><div class="calendar-actions"><div class="calendar-legend"><button class="btn ghost week-nav" onclick="shiftWeek(-1)">‹ שבוע קודם</button><button class="btn ghost week-nav" onclick="resetWeek()">השבוע</button><button class="btn ghost week-nav" onclick="shiftWeek(1)">שבוע הבא ›</button><button class="btn ghost" onclick="setTab('leads')">חזרה לפניות</button></div></div></div><div class="dispatch-layout"><aside class="dispatch-pool"><div class="pool-head"><div><div class="eyebrow">פניות ממתינות</div><h2>טבלת תעדוף</h2></div><strong>${pending.length}</strong></div><p class="pool-hint">בדמו יש גם אפשרות אחת וגם שתי אפשרויות לאותו לקוח. גררי בועה ליומן או לחצי על אחת מאפשרויות הזמן. כמה בועות באותה משבצת הן התנגשות לתרגול.</p><div class="priority-list">${pending.map(l=>`<article class="priority-card" draggable="true" ondragstart="dragLead('${l.id}')"><div class="priority-card-name">${esc(l.name)}</div><div>${esc(l.service)} · ${rule(l.service).duration} דק׳</div><div class="priority-stars">${stars(l)}</div><small>${esc(l.slots)}</small><div class="slot-options">${(l.options||[]).map(o=>`<button class="slot-option" onclick="placeLeadOption('${l.id}','${o.day}','${o.slot}')">${o.label}</button>`).join("")}</div></article>`).join("")||`<div class="empty-state">אין כרגע פניות שממתינות לשיבוץ.</div>`}</div></aside><section class="calendar-card week-scroll"><div class="week-board"><div class="week-row week-head"><div class="time-col head-label">שעה</div>${days.map(d=>`<div class="day-head ${d.tone}"><b>${d.name}</b><span>${d.date}</span></div>`).join("")}</div>${slots.map(time=>`<div class="week-row"><div class="time-col">${time}</div>${days.map(d=>`<div class="day-cell" ondragover="event.preventDefault()" ondrop="dropOnCalendar('${d.key}','${time}')">${event(d,time)}</div>`).join("")}</div>`).join("")}</div></section></div><div class="calendar-foot-note">כרטיסים באותו תא מציגים התנגשות אפשרית לתרגול. פנייה עם שתי אפשרויות מופיעה פעם אחת בלבד בטבלת התיעדוף; רק האפשרות שניר בוחר הופכת לשיבוץ. לאחר האישור נוצרת הודעת WhatsApp עם היום והשעה שבחר.</div>`;
+  return `<div class="page-head calendar-page-head"><div class="calendar-title"><div class="eyebrow">מרכז השיבוץ של ניר</div><h1>יומן עבודה שבועי</h1><p>היומן הוא אזור העבודה המרכזי. גררי פנייה מהצד הימני למשבצת, או בחרי אחת מאפשרויות הזמן שלה.</p><div class="calendar-hint"><b>שלישי–חמישי בלבד</b><span>פנייה עם שתי אפשרויות נשארת כבועה אחת עד שניר בוחר מועד.</span></div></div><div class="calendar-actions"><div class="calendar-legend"><button class="btn ghost week-nav" onclick="shiftWeek(-1)">‹ שבוע קודם</button><button class="btn ghost week-nav" onclick="resetWeek()">השבוע</button><button class="btn ghost week-nav" onclick="shiftWeek(1)">שבוע הבא ›</button><button class="btn ghost" onclick="setTab('leads')">כל הפניות</button></div></div></div><div class="dispatch-layout"><aside class="dispatch-pool"><div class="pool-head"><div><div class="eyebrow">צד ימין · עבודה</div><h2>פניות לשיבוץ</h2></div><strong>${pending.length}</strong></div><p class="pool-hint">ממוינות לפי עדיפות. הכרטיסים נשארים גדולים לקריאה; ניתן לגלול רק בתוך רשימת הפניות.</p><div class="priority-summary"><span class="high">גבוהה <b>${pending.filter(l=>priority(l)>=80).length}</b></span><span class="mid">בינונית <b>${pending.filter(l=>priority(l)>=50&&priority(l)<80).length}</b></span><span class="low">רגילה <b>${pending.filter(l=>priority(l)<50).length}</b></span></div><div class="priority-list">${pending.map(l=>`<article class="priority-card" draggable="true" ondragstart="dragLead('${l.id}')" tabindex="0" aria-label="${esc(l.name)}, ${esc(l.service)}, ${esc(l.slots)}"><div class="priority-card-top"><div class="priority-card-name">${esc(l.name)}</div><span class="priority-pill">${priority(l)} נק׳</span></div><div class="priority-service">${esc(l.service)} · ${rule(l.service).duration} דק׳</div><div class="priority-stars">${stars(l)}</div><small>${esc(l.slots)}</small><div class="slot-options">${(l.options||[]).map(o=>`<button class="slot-option" onclick="placeLeadOption('${l.id}','${o.day}','${o.slot}')">${o.label}</button>`).join("")}</div></article>`).join("")||`<div class="empty-state">אין כרגע פניות שממתינות לשיבוץ.</div>`}</div></aside><section class="calendar-card week-scroll" aria-label="יומן שבועי"><div class="week-board"><div class="week-row week-head"><div class="time-col head-label">שעה</div>${days.map(d=>`<div class="day-head ${d.tone}"><b>${d.name}</b><span>${d.date}</span></div>`).join("")}</div>${slots.map(time=>`<div class="week-row"><div class="time-col">${time}</div>${days.map(d=>`<div class="day-cell" ondragover="event.preventDefault()" ondrop="dropOnCalendar('${d.key}','${time}')">${event(d,time)}</div>`).join("")}</div>`).join("")}</div></section></div><div class="calendar-foot-note">היומן מציג את כל שעות העבודה ברצף. כרטיסים באותו תא מציגים התנגשות אפשרית; רק האפשרות שניר בוחר הופכת לשיבוץ.</div>`;
 }
 function render(){const root=document.querySelector("#app"); if(!root)return; const body=state.activeTab==='dashboard'?dashboard():state.activeTab==='leads'?leadsView():state.activeTab==='new'?newLead():state.activeTab==='calendar'?calendarView():customersView(); root.innerHTML=`<div class="shell"><header class="topbar"><div class="brand"><span class="brand-mark">N</span><span><b>NIR</b> SALON <small>ניהול פניות ותורים</small></span></div><nav>${[['dashboard','סקירה','⌂'],['leads','פניות','◈'],['new','פנייה חדשה','＋'],['calendar','יומן','◷'],['customers','לקוחות','◎']].map(([k,t,i])=>`<button class="nav-btn ${state.activeTab===k?'active':''}" onclick="setTab('${k}')"><i>${i}</i>${t}</button>`).join("")}</nav><div class="demo-pill"><span></span> מצב דמו</div></header><main>${body}</main><footer><span>NIR SALON · דמו קונספט</span><span>WhatsApp מוכן לשליחה · נתוני הדגמה בלבד</span></footer>${state.toast?`<div class="toast">✓ ${esc(state.toast)}</div>`:""}</div>`;}
 if(typeof window!=="undefined"){window.render=render;window.setTab=setTab;window.shiftWeek=shiftWeek;window.resetWeek=resetWeek;window.addPerson=addPerson;window.submitLead=submitLead;window.selectLead=selectLead;window.openWhatsApp=openWhatsApp;window.copyIntakeLink=copyIntakeLink;window.copyIntakeMessage=copyIntakeMessage;window.openIntakeWhatsApp=openIntakeWhatsApp;window.leadById=leadById;window.updateStatus=updateStatus;window.showToast=showToast;window.dragLead=dragLead;window.dragBooking=dragBooking;window.placeLeadOption=placeLeadOption;window.dropOnCalendar=dropOnCalendar;window.approveBooking=approveBooking;window.selectCustomer=selectCustomer;window.state=state;window.SERVICE_RULES=SERVICE_RULES;}

@@ -14,6 +14,47 @@
 @media(max-width:1100px){.priority-list{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:850px){.week-board{min-width:760px}.week-row{grid-template-columns:50px repeat(3,minmax(235px,1fr))}.intake-actions{display:grid;grid-template-columns:1fr}.priority-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.priority-list{grid-template-columns:1fr}}
+/* Accessible calendar workspace: calendar first, readable request rail second. */
+.calendar-page-head{align-items:flex-start;gap:24px;margin-bottom:18px}
+.calendar-title{min-width:0}
+.calendar-title h1{margin-bottom:8px}
+.calendar-title p{font-size:14px;max-width:700px;line-height:1.55}
+.calendar-hint{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:12px;color:#718096;font-size:12px;line-height:1.4}
+.calendar-hint b{color:var(--teal)}
+.calendar-actions{flex:0 0 auto;padding-top:18px}
+.calendar-legend{gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.calendar-legend .btn{font-size:13px;padding:10px 12px;white-space:nowrap}
+.dispatch-layout{grid-template-columns:minmax(285px,300px) minmax(0,1fr);gap:20px;align-items:start}
+.dispatch-pool{position:sticky;top:18px;max-height:calc(100vh - 170px);overflow:auto;padding:18px 16px}
+.pool-head h2{font-size:21px}
+.pool-hint{font-size:12px;line-height:1.5}
+.priority-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin:12px 0 14px}
+.priority-summary span{border-radius:8px;padding:7px 4px;text-align:center;font-size:10px;color:#718096;background:#f5f7fa}
+.priority-summary b{display:block;font-size:15px;color:var(--navy);margin-top:2px}
+.priority-summary .high{background:#fff0df;color:#b86d2d}.priority-summary .mid{background:#f1edff;color:#735bc4}.priority-summary .low{background:#eaf7f6;color:#158e85}
+.priority-card{min-height:0;padding:13px 12px;border-right-width:5px;background:#fff}
+.priority-card-top{display:flex;align-items:center;justify-content:space-between;gap:7px}
+.priority-card-name{font-size:15px;margin:0}
+.priority-pill{font-size:10px;color:#735bc4;background:#f1edff;border-radius:6px;padding:4px 5px;white-space:nowrap}
+.priority-service{font-size:12px;color:#52647c;margin-top:6px}
+.priority-card small{font-size:12px;line-height:1.4}
+.slot-option{font-size:11px;padding:6px 8px;min-height:30px}
+.week-scroll{overflow:hidden}
+.week-row{grid-template-columns:58px repeat(3,minmax(0,1fr))}
+.day-head{min-height:54px;font-size:14px}
+.day-head span{font-size:11px}
+.time-col{min-height:60px;font-size:12px}
+.day-cell{min-height:60px;padding:5px}
+.schedule-card{min-height:76px;padding:8px 9px}
+.schedule-name{font-size:12px}
+.schedule-service{font-size:10px}
+.schedule-stars{font-size:11px}
+.schedule-status{font-size:10px}
+.schedule-confirm{font-size:10px;min-height:28px}
+.conflict-note{font-size:10px;padding:4px 5px}
+.calendar-foot-note{font-size:12px;padding:12px 16px}
+@media(max-width:1050px){.dispatch-layout{grid-template-columns:minmax(260px,29%) minmax(0,1fr)}.calendar-title p{font-size:13px}}
+@media(max-width:850px){.calendar-page-head{gap:8px}.calendar-actions{padding-top:0}.calendar-legend{justify-content:flex-start}.dispatch-layout{grid-template-columns:1fr}.dispatch-pool{position:static;order:2;max-height:380px}.dispatch-layout>.calendar-card{order:1}.week-scroll{overflow-x:auto}.week-board{min-width:760px}}
 /* Final readable workspace layout: priority list beside a wide calendar. */
 .dispatch-layout{display:grid;grid-template-columns:minmax(300px,34%) minmax(0,1fr);gap:18px;direction:rtl;align-items:start}
 .dispatch-pool{width:100%;padding:18px;border-radius:18px}
